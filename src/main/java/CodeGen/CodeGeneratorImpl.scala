@@ -1,8 +1,9 @@
 package CodeGen
+import CodeGen.Javascript.JavascriptCode
 import Trees.{HtmlNode, NodeElement, NodeRepeat, NodeText}
 import Utils.Nodes.toNodes
 
-class CodeGeneratorImpl extends CodeGenerator {
+class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerator {
 
   /**
     * Generate the code to create a collection of nodes and append them to their parents
@@ -35,15 +36,14 @@ class CodeGeneratorImpl extends CodeGenerator {
 
       case NodeText(Some(variable), text) =>
         s"""
-           | var $variable = document.createTextNode(node);
+           | var $variable = document.createTextNode("$text");
            | ${appendToParent(htmlNode, parent)}
          """.stripMargin
       case NodeRepeat(repeater, node) =>
         val nodeCode = writeNode(parent)(node)
         s"""
-           |$repeater.forEach(function(${getNodeName(node)}) {
-           |  $nodeCode
-           |}
+           |$repeater.forEach(${javascriptCode.function(List("element"), writeNode(parent)(node))}
+           |);
          """.stripMargin
     }
   }
