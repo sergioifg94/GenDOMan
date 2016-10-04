@@ -22,7 +22,7 @@ class HtmlParserImpl extends HtmlParser {
       val doc = Jsoup.parseBodyFragment(input)
       val body = doc.select("body")(0)
 
-      Some(body.childNodes().map(createNode))
+      Some(filterNodes(body.childNodes()).map(createNode))
   }
 
   /**
@@ -37,7 +37,7 @@ class HtmlParserImpl extends HtmlParser {
 
       // Element
       case elem: Element  =>
-        val node = NodeElement(None, elem.tagName(), elem.childNodes().map(createNode), getAttributes(element.attributes()))
+        val node = NodeElement(None, elem.tagName(), filterNodes(elem.childNodes()).map(createNode), getAttributes(element.attributes()))
 
         if (elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE))
           NodeRepeat(elem.attr(FOREACH_NODE_ATTRIBUTE), NodeElement(None, node.tag, node.children,
@@ -57,5 +57,15 @@ class HtmlParserImpl extends HtmlParser {
       (map, attribute) => map + (attribute.getKey -> attribute.getValue)
     }
   }
+
+  /**
+    * Filters a collection of nodes. Ignores blank text nodes
+    * @param nodes Collection of nodes
+    * @return
+    */
+  private def filterNodes(nodes: Iterable[Node]) = nodes.filter({
+    case text: TextNode => !text.isBlank
+    case _ => true
+  })
 
 }
