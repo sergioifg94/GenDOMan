@@ -1,7 +1,7 @@
-package CodeGen
-import CodeGen.Javascript.JavascriptCode
-import Trees.{HtmlNode, NodeElement, NodeRepeat, NodeText}
-import Utils.Nodes.toNodes
+package codeGen
+import codeGen.Javascript.JavascriptCode
+import tree.{HtmlNode, NodeElement, NodeRepeat, NodeText}
+import util.Nodes.toNodes
 
 class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerator {
 

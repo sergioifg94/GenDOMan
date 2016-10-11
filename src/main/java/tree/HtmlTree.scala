@@ -1,4 +1,4 @@
-package Trees
+package tree
 
 
 sealed trait HtmlNode

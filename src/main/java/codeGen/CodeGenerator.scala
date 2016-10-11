@@ -1,6 +1,6 @@
-package CodeGen
+package codeGen
 
-import Trees.HtmlNode
+import tree.HtmlNode
 
 trait CodeGenerator {
 

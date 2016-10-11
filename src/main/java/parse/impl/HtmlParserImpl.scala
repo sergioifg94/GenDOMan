@@ -1,7 +1,7 @@
-package Parse.Impl
+package parse.impl
 
-import Parse.HtmlParser
-import Trees._
+import parse.HtmlParser
+import tree._
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Attributes, Element, Node, TextNode}
 

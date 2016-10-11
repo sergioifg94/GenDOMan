@@ -1,6 +1,6 @@
-package Utils
+package util
 
-import Trees.HtmlNode
+import tree.HtmlNode
 
 class Nodes(val nodes: Iterable[HtmlNode]) {
 

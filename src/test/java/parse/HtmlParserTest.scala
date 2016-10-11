@@ -1,7 +1,7 @@
-package Parse
+package parse
 
-import Parse.Impl.HtmlParserImpl
-import Trees.NodeElement
+import parse.impl.HtmlParserImpl
+import tree.NodeElement
 import junit.framework.TestCase
 import org.junit.Assert._
 

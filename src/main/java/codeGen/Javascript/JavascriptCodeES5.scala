@@ -1,4 +1,4 @@
-package CodeGen.Javascript
+package codeGen.Javascript
 
 class JavascriptCodeES5 extends JavascriptCode {
 

@@ -1,7 +1,7 @@
-package Naming
+package naming
 
-import CodeGen.Javascript.{JavascriptCodeES5, JavascriptCodeES6}
-import Trees.NodeElement
+import codeGen.Javascript.{JavascriptCodeES5, JavascriptCodeES6}
+import tree.NodeElement
 import junit.framework.TestCase
 import org.junit.Assert._
 

@@ -1,6 +1,6 @@
-package Parse
+package parse
 
-import Trees.HtmlNode
+import tree.HtmlNode
 
 /**
   * Component that parses the input and produces the tree

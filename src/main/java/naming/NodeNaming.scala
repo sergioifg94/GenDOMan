@@ -1,6 +1,6 @@
-package Naming
+package naming
 
-import Trees.HtmlNode
+import tree.HtmlNode
 
 /**
   * Traverses the tree and assigns different variable names to the nodes

@@ -1,7 +1,7 @@
-import CodeGen.CodeGeneratorImpl
-import CodeGen.Javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
-import Naming.NodeNamingImpl
-import Parse.Impl.HtmlParserImpl
+import codeGen.CodeGeneratorImpl
+import codeGen.Javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
+import naming.NodeNamingImpl
+import parse.impl.HtmlParserImpl
 
 import scala.io.Source
 
