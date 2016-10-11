@@ -1,5 +1,6 @@
-import codeGen.CodeGeneratorImpl
+import codeGen.{CodeGenerator, CodeGeneratorImpl, TemplateCodeGenerator}
 import codeGen.javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
+import codeGen.template.SimpleTemplateWriter
 import naming.NodeNamingImpl
 import parse.impl.HtmlParserImpl
 
@@ -32,7 +33,7 @@ object Main {
     }
 
     val parser = new HtmlParserImpl
-    val codeGen = new CodeGeneratorImpl(jsCode.get)
+    val codeGen = getCodeGeneration(args, jsCode.get)
     val naming = new NodeNamingImpl(jsCode.get)
 
     val tree = parser.parseHtml(input.get)
@@ -63,6 +64,24 @@ object Main {
     }
 
     Some(new JavascriptCodeES6)
+  }
+
+  /**
+    * Get the code generator given the program arguments
+    * @param args Program arguments
+    * @param javascriptCode
+    * @return
+    */
+  def getCodeGeneration(args: Array[String], javascriptCode: JavascriptCode) : CodeGenerator = {
+    val pattern = """--template=(.+)""".r
+
+    args.foreach {
+      case pattern(templateFilename) => return new TemplateCodeGenerator(new CodeGeneratorImpl(javascriptCode),
+        new SimpleTemplateWriter, templateFilename)
+      case _ => ;
+    }
+
+    new CodeGeneratorImpl(javascriptCode)
   }
 
   /**
