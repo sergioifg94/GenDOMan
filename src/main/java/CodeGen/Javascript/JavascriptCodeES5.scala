@@ -10,4 +10,5 @@ class JavascriptCodeES5 extends JavascriptCode {
        """.stripMargin
   }
 
+  override def isReservedSpecific(word: String): Boolean = false
 }

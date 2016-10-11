@@ -33,7 +33,7 @@ object Main {
 
     val parser = new HtmlParserImpl
     val codeGen = new CodeGeneratorImpl(jsCode.get)
-    val naming = new NodeNamingImpl
+    val naming = new NodeNamingImpl(jsCode.get)
 
     val tree = parser.parseHtml(input.get)
 
