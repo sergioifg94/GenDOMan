@@ -1,4 +1,4 @@
-package codeGen.Javascript
+package codeGen.javascript
 
 trait JavascriptCode {
 

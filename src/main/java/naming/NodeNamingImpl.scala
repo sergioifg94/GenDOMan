@@ -1,5 +1,5 @@
 package naming
-import codeGen.Javascript.JavascriptCode
+import codeGen.javascript.JavascriptCode
 import tree.{HtmlNode, NodeElement, NodeRepeat, NodeText}
 
 class NodeNamingImpl(val js: JavascriptCode) extends NodeNaming {

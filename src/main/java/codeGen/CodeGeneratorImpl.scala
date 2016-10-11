@@ -1,5 +1,5 @@
 package codeGen
-import codeGen.Javascript.JavascriptCode
+import codeGen.javascript.JavascriptCode
 import tree.{HtmlNode, NodeElement, NodeRepeat, NodeText}
 import util.Nodes.toNodes
 

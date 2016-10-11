@@ -1,5 +1,5 @@
 import codeGen.CodeGeneratorImpl
-import codeGen.Javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
+import codeGen.javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
 import naming.NodeNamingImpl
 import parse.impl.HtmlParserImpl
 
