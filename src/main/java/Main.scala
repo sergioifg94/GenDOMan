@@ -1,4 +1,4 @@
-import codeGen.{CodeGenerator, CodeGeneratorImpl, TemplateCodeGenerator}
+import codeGen.{CodeGenerator, CodeGeneratorImpl, FormatCodeGenerator, TemplateCodeGenerator}
 import codeGen.javascript.{JavascriptCode, JavascriptCodeES5, JavascriptCodeES6}
 import codeGen.template.SimpleTemplateWriter
 import naming.NodeNamingImpl
@@ -75,13 +75,15 @@ object Main {
   def getCodeGeneration(args: Array[String], javascriptCode: JavascriptCode) : CodeGenerator = {
     val pattern = """--template=(.+)""".r
 
-    args.foreach {
-      case pattern(templateFilename) => return new TemplateCodeGenerator(new CodeGeneratorImpl(javascriptCode),
-        new SimpleTemplateWriter, templateFilename)
-      case _ => ;
+    val fromArgs = args.foldLeft(new CodeGeneratorImpl(javascriptCode) : CodeGenerator) {
+      (cg, arg) => arg match {
+        // If the template argument is passed, wraps the code generator into a template with the filename passed
+        case pattern(templateFilename) => new TemplateCodeGenerator(cg, new SimpleTemplateWriter, templateFilename)
+        case _ => cg
+      }
     }
 
-    new CodeGeneratorImpl(javascriptCode)
+    new FormatCodeGenerator(fromArgs)
   }
 
   /**
