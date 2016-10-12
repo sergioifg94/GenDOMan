@@ -25,8 +25,8 @@ class NodeNamingImpl(val js: JavascriptCode) extends NodeNaming {
     case NodeElement(_, tag, children, attributes) =>
       // If the node doesn't have an ID or the ID is a reserved keyword, give it a default variable name
       if (!attributes.contains("id") || js.isReserved(attributes("id"))) {
-        val result = NodeElement(Some(s"node$notIdNodesIndex"), tag, nameNodes(children), attributes)
         notIdNodesIndex = notIdNodesIndex + 1
+        val result = NodeElement(Some(s"node${notIdNodesIndex - 1}"), tag, nameNodes(children), attributes)
         return result
       }
 

@@ -10,6 +10,6 @@ trait NodeNaming {
   def nameNodes(nodes: Iterable[HtmlNode]) : Iterable[HtmlNode] =
     nodes.map(nameNode)
 
-  def nameNode(node: HtmlNode) : HtmlNode
+  protected def nameNode(node: HtmlNode) : HtmlNode
 
 }

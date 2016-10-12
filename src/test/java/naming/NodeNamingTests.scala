@@ -10,7 +10,7 @@ class NodeNamingTests extends TestCase {
   /**
     * Test that no repeated variable names are assigned
     */
-  def testNoRepeatedNames(): Unit = {
+  def testNoRepeatedNames1(): Unit = {
     val tree = Range(0, 10).map(_ => NodeElement(None, "div", List(), Map()))
 
     val naming = new NodeNamingImpl(new JavascriptCodeES6)
@@ -24,6 +24,20 @@ class NodeNamingTests extends TestCase {
     }
 
     assertEquals(nameSets.size, namedTree.size)
+  }
+
+  def testNoRepeatedNames2(): Unit = {
+    val tree = NodeElement(None, "div", Seq(
+      NodeElement(None, "p", Seq(), Map())
+    ), Map())
+
+    val naming = new NodeNamingImpl(new JavascriptCodeES6)
+
+    val namedTree = naming.nameNodes(Seq(tree)).head
+
+    namedTree match {
+      case (NodeElement(Some(divName), _, ((NodeElement(Some(pName), _, _, _)::_)), _)) => assertNotEquals(divName, pName)
+    }
   }
 
   /**
