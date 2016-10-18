@@ -22,4 +22,4 @@ case class NodeText(variable: Option[String], text: String) extends HtmlNode
   * @param repeater JavaScript reference to the array that spans the nodes
   * @param node Node to repeat
   */
-case class NodeRepeat(repeater: String, node: HtmlNode) extends HtmlNode
+case class NodeRepeat(repeater: String, variable: String, node: HtmlNode) extends HtmlNode

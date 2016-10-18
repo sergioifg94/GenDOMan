@@ -45,7 +45,7 @@ class NodeNamingImpl(val js: JavascriptCode) extends NodeNaming {
 
 
     // Visit the subtree of the foreach node
-    case NodeRepeat(repeater, repeated) => NodeRepeat(repeater, nameNode(repeated))
+    case NodeRepeat(repeater, variable, repeated) => NodeRepeat(repeater, variable, nameNode(repeated))
   }
 
 }

@@ -39,10 +39,10 @@ class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerato
            | var $variable = document.createTextNode("$text");
            | ${appendToParent(htmlNode, parent)}
          """.stripMargin
-      case NodeRepeat(repeater, node) =>
+      case NodeRepeat(repeater, variable, node) =>
         val nodeCode = writeNode(parent)(node)
         s"""
-           |$repeater.forEach(${javascriptCode.function(List("element"), writeNode(parent)(node))}
+           |$repeater.forEach(${javascriptCode.function(List(variable), writeNode(parent)(node))}
            |);
          """.stripMargin
     }

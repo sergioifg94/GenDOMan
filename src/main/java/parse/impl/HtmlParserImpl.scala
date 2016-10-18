@@ -22,7 +22,7 @@ class HtmlParserImpl extends HtmlParser {
       val doc = Jsoup.parseBodyFragment(input)
       val body = doc.select("body")(0)
 
-      Some(filterNodes(body.childNodes()).map(createNode))
+      mapOption[Node, HtmlNode](filterNodes(body.childNodes()), createNode)
   }
 
   /**
@@ -30,20 +30,26 @@ class HtmlParserImpl extends HtmlParser {
     * @param element Jsoup element
     * @return Tree node
     */
-  private def createNode(element: Node) : HtmlNode = {
+  private def createNode(element: Node) : Option[HtmlNode] = {
     element match {
       // Text node
-      case text: TextNode => NodeText(None, text.getWholeText)
+      case text: TextNode => Some(NodeText(None, text.getWholeText))
 
       // Element
       case elem: Element  =>
-        val node = NodeElement(None, elem.tagName(), filterNodes(elem.childNodes()).map(createNode), getAttributes(element.attributes()))
-
-        if (elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE))
-          NodeRepeat(elem.attr(FOREACH_NODE_ATTRIBUTE), NodeElement(None, node.tag, node.children,
-            node.attributes - FOREACH_NODE_ATTRIBUTE)) // Removes the foreach attribute from the node
-        else
-          node
+        for (
+          // Obtain the child nodes of the element
+          childNodes <- mapOption(filterNodes(elem.childNodes()), createNode);
+          // Create the node
+          node = NodeElement(None, elem.tagName(), childNodes, getAttributes(element.attributes()));
+          // Check if the node is repeated by its attribute
+          repeat = elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE);
+          // If it's repeated, create the node
+          repeated <- if (repeat)
+            NodeRepeatParser(node.attributes(FOREACH_NODE_ATTRIBUTE), NodeElement(None, node.tag, node.children,
+              node.attributes - FOREACH_NODE_ATTRIBUTE))
+            else Some(null)
+        ) yield if (repeat) repeated else node
     }
   }
 
@@ -68,4 +74,20 @@ class HtmlParserImpl extends HtmlParser {
     case _ => true
   })
 
+  /**
+    * Implementation of mapM.
+    * @param iterable Source list
+    * @param f Function to apply to every element of the list
+    * @tparam T Type of the original elements
+    * @tparam B Type of the elements returned
+    * @return
+    */
+  private def mapOption[T, B](iterable: Iterable[T], f: T => Option[B]) : Option[Iterable[B]] =
+    iterable.foldRight(Some(List[B]()): Option[List[B]]) {
+      (elem, acc) => for (
+        a <- acc;
+        e <- f(elem);
+        r = a.::(e)
+      ) yield r
+    }
 }
