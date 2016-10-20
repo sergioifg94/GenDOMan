@@ -33,7 +33,8 @@ class HtmlParserImpl extends HtmlParser {
   private def createNode(element: Node) : Option[HtmlNode] = {
     element match {
       // Text node
-      case text: TextNode => Some(NodeText(None, text.getWholeText))
+      case text: TextNode =>
+        for (expr <- TemplateParser(text.getWholeText)) yield NodeText(None, expr)
 
       // Element
       case elem: Element  =>

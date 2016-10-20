@@ -36,11 +36,10 @@ class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerato
 
       case NodeText(Some(variable), text) =>
         s"""
-           | var $variable = document.createTextNode("$text");
+           | var $variable = document.createTextNode(${javascriptCode.stringTemplate(text)});
            | ${appendToParent(htmlNode, parent)}
          """.stripMargin
       case NodeRepeat(repeater, variable, node) =>
-        val nodeCode = writeNode(parent)(node)
         s"""
            |$repeater.forEach(${javascriptCode.function(List(variable), writeNode(parent)(node))}
            |);

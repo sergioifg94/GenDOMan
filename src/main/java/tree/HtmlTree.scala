@@ -15,7 +15,7 @@ case class NodeElement(variable: Option[String], tag: String, children: Iterable
   * Text node
   * @param text Contents of the node
   */
-case class NodeText(variable: Option[String], text: String) extends HtmlNode
+case class NodeText(variable: Option[String], text: Iterable[TemplateExpression]) extends HtmlNode
 
 /**
   * Node created in a for loop

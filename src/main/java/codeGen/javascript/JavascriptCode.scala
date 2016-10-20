@@ -1,5 +1,7 @@
 package codeGen.javascript
 
+import tree.TemplateExpression
+
 trait JavascriptCode {
 
   /**
@@ -9,6 +11,13 @@ trait JavascriptCode {
     * @return JS code
     */
   def function(parameters: Traversable[String], body: String) : String
+
+  /**
+    * Write the code to create a string from a template
+    * @param expression
+    * @return
+    */
+  def stringTemplate(expression: Iterable[TemplateExpression]) : String
 
   /**
     * Check if a word is reserved in the JS specification
