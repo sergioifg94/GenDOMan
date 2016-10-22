@@ -20,11 +20,19 @@ class JavascriptCodeES6 extends JavascriptCode {
     * @param expression
     * @return
     */
-  override def stringTemplate(expression: Iterable[TemplateExpression]): String = expression.foldLeft("`") {
-    (code, node) => node match {
-      case LiteralNode(literal) => code + literal
-      case TemplateNode(value) => code + "${" + value + "}"
-    }
-  } + "`"
+  override def stringTemplate(expression: Iterable[TemplateExpression]): String = expression match {
+    // If it's only a literal, write is as an string
+    case (LiteralNode(literal)::Nil) => s""""$literal""""
+    // If it's an expression, write the expression
+    case (TemplateNode(value)::Nil) => s"$value"
+
+    // If it's a template, use string interpolation
+    case expr => expr.foldLeft("`") {
+      (code, node) => node match {
+        case LiteralNode(literal) => code + literal
+        case TemplateNode(value) => code + "${" + value + "}"
+      }
+    } + "`"
+  }
 
 }
