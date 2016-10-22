@@ -10,10 +10,10 @@ A simple example of usage is:
 gendoman -i input.html
 ```
 
-By default, GenDOMan generates ES5 JS code. If you want to select the generated code to use the ECMAScript 6, pass the
+By default, GenDOMan generates ES6 JS code. If you want to select the generated code to use the ECMAScript 5, pass the
 argument
 ```
---ecmascript=es6
+--ecmascript=es5
 ```
 
 In order to wrap the generated code into a template, pass the argument. 
