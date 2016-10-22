@@ -1,6 +1,6 @@
 package codeGen
 import codeGen.javascript.JavascriptCode
-import tree.{HtmlNode, NodeElement, NodeRepeat, NodeText}
+import tree._
 import util.Nodes.toNodes
 
 class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerator {
@@ -39,6 +39,12 @@ class CodeGeneratorImpl(val javascriptCode: JavascriptCode) extends CodeGenerato
            | var $variable = document.createTextNode(${javascriptCode.stringTemplate(text)});
            | ${appendToParent(htmlNode, parent)}
          """.stripMargin
+
+      case NodeComment(comment) =>
+        s"""
+           |/* $comment */
+         """.stripMargin
+
       case NodeRepeat(repeater, variable, node) =>
         s"""
            |$repeater.forEach(${javascriptCode.function(List(variable), writeNode(parent)(node))}

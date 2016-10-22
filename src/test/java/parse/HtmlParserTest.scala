@@ -1,7 +1,7 @@
 package parse
 
 import parse.impl.{HtmlParserImpl, NodeRepeatParser}
-import tree.{NodeElement, NodeRepeat}
+import tree.{NodeComment, NodeElement, NodeRepeat}
 import junit.framework.TestCase
 import org.junit.Assert._
 
@@ -60,6 +60,21 @@ class HtmlParserTest extends TestCase {
         assertEquals("[1, 2, 3, 4, 5]", repeater)
 
       case _ => fail("Failed parsing correct expression")
+    }
+  }
+
+  def testCommentParse(): Unit = {
+    val html =
+      """
+        |<div>
+        |<!--This is a comment-->
+        |</div>
+      """.stripMargin
+    val parser = new HtmlParserImpl
+    val result = parser.parseHtml(html)
+
+    result.get.head match {
+      case (NodeElement(_, _, (NodeComment(comment)::_), _)) => assertEquals("This is a comment", comment)
     }
   }
 

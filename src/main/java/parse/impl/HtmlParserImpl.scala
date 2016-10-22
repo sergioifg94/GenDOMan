@@ -3,7 +3,7 @@ package parse.impl
 import parse.HtmlParser
 import tree._
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Attributes, Element, Node, TextNode}
+import org.jsoup.nodes._
 
 import collection.JavaConversions._
 import scala.collection.immutable.Map
@@ -35,6 +35,10 @@ class HtmlParserImpl extends HtmlParser {
       // Text node
       case text: TextNode =>
         for (expr <- TemplateParser(text.getWholeText)) yield NodeText(None, expr)
+
+      // Comment
+      case comment: Comment =>
+        Some(NodeComment(comment.getData.filterNot(_ == '\n')))
 
       // Element
       case elem: Element  =>

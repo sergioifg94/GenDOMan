@@ -18,6 +18,12 @@ case class NodeElement(variable: Option[String], tag: String, children: Iterable
 case class NodeText(variable: Option[String], text: Iterable[TemplateExpression]) extends HtmlNode
 
 /**
+  * HTML Comment
+  * @param comment Text of the comment
+  */
+case class NodeComment(comment: String) extends HtmlNode
+
+/**
   * Node created in a for loop
   * @param repeater JavaScript reference to the array that spans the nodes
   * @param node Node to repeat
