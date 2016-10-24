@@ -24,7 +24,7 @@ In order to wrap the generated code into a template, pass the argument.
 ```
 --template=template.html
 ```
-Write the expression ```${code}``` in the template to tell GenDOMan where to place the generated code. Example:
+Write the expression ```{{code}}``` in the template to tell GenDOMan where to place the generated code. Example:
 
 ```
 <html>
