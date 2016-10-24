@@ -7,7 +7,7 @@ class SimpleTemplateWriterTest extends TestCase {
 
   def testTemplateWriter(): Unit = {
     val templateWriter = new SimpleTemplateWriter
-    val codeTemplate = "${code}"
+    val codeTemplate = "{{code}}"
     def template(code: String) =
       s"""
         |<script>
