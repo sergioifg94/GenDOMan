@@ -30,7 +30,7 @@ Write the expression ```${code}``` in the template to tell GenDOMan where to pla
 <html>
     <head>
         <title>This is an example</title>
-        <script>${code}</script>
+        <script>{{code}}</script>
     </head>
     <body></body>
 </html>
