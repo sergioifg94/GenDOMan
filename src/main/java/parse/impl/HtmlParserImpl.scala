@@ -34,7 +34,7 @@ class HtmlParserImpl extends HtmlParser {
     element match {
       // Text node
       case text: TextNode =>
-        for (expr <- TemplateParser(text.getWholeText)) yield NodeText(None, expr)
+        for (expr <- TemplateParser(text.text().trim)) yield NodeText(None, expr)
 
       // Comment
       case comment: Comment =>
