@@ -2,6 +2,10 @@
 
 GenDOMan is a tool that generates the JavaScript code to create the nodes of a given HTML code
 
+## Installation
+
+Clone the repository, cd into the directory and execute ```./install.sh <INSTALLATION FOLDER>```
+
 ## Usage
 
 A simple example of usage is:
