@@ -4,14 +4,14 @@ GenDOMan is a tool that generates the JavaScript code to create the nodes of a g
 
 ## Installation
 
-Clone the repository, cd into the directory and execute ```./install.sh <INSTALLATION FOLDER>```
+Clone the repository, cd into the directory and execute ```$ ./install.sh <INSTALLATION FOLDER>```
 
 ## Usage
 
 A simple example of usage is:
 
 ```
-gendoman -i input.html
+$ gendoman -i input.html
 ```
 
 By default, GenDOMan generates ES6 JS code. If you want to select the generated code to use the ECMAScript 5, pass the
