@@ -42,19 +42,17 @@ class HtmlParserImpl extends HtmlParser {
 
       // Element
       case elem: Element  =>
-        for (
-          // Obtain the child nodes of the element
-          childNodes <- mapOption(filterNodes(elem.childNodes()), createNode);
-          // Create the node
-          node = NodeElement(None, elem.tagName(), childNodes, getAttributes(element.attributes()));
-          // Check if the node is repeated by its attribute
-          repeat = elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE);
-          // If it's repeated, create the node
-          repeated <- if (repeat)
-            NodeRepeatParser(node.attributes(FOREACH_NODE_ATTRIBUTE), NodeElement(None, node.tag, node.children,
-              node.attributes - FOREACH_NODE_ATTRIBUTE))
-            else Some(null)
-        ) yield if (repeat) repeated else node
+        // Create the node
+        val node = for (childNodes <- mapOption(filterNodes(elem.childNodes()), createNode))
+          yield NodeElement(None, elem.tagName(), childNodes, getAttributes(element.attributes()))
+
+        // If it's repeated, create the repeated node and return it
+        if (elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE))
+          for (n <- node; repeated <- NodeRepeatParser(n.attributes(FOREACH_NODE_ATTRIBUTE), NodeElement(None, n.tag,
+            n.children, n.attributes - FOREACH_NODE_ATTRIBUTE))) yield repeated
+        // Otherwise, just return the node
+        else
+          node
     }
   }
 

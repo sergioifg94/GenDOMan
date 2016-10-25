@@ -50,6 +50,23 @@ class HtmlParserTest extends TestCase {
     }
   }
 
+  def testRepeatNode(): Unit = {
+    val html =
+      """<div>
+        | <p data-repeat="element in collection">Text</p>
+        |</div>
+      """.stripMargin
+
+    val parser = new HtmlParserImpl
+    val parsed = parser.parseHtml(html)
+
+    parsed.get.head match {
+      case (NodeElement(_, _, (NodeRepeat(repeater, variable, node)::_), _)) =>
+        assertEquals("element", variable)
+        assertEquals("collection", repeater)
+    }
+  }
+
   def testRepeaterParser(): Unit = {
     val expression = "element in [1, 2, 3, 4, 5]"
     val node = NodeRepeatParser(expression, null)
