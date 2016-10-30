@@ -34,7 +34,7 @@ class HtmlParserImpl extends HtmlParser {
     element match {
       // Text node
       case text: TextNode =>
-        TemplateParser(text.text().trim).map(NodeText(None, _))
+        TemplateParser(text.text().trim).map(NodeText.curried(None))
 
       // Comment
       case comment: Comment =>
