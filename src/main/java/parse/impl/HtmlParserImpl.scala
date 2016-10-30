@@ -34,7 +34,7 @@ class HtmlParserImpl extends HtmlParser {
     element match {
       // Text node
       case text: TextNode =>
-        for (expr <- TemplateParser(text.text().trim)) yield NodeText(None, expr)
+        TemplateParser(text.text().trim).map(NodeText(None, _))
 
       // Comment
       case comment: Comment =>
@@ -43,8 +43,8 @@ class HtmlParserImpl extends HtmlParser {
       // Element
       case elem: Element  =>
         // Create the node
-        val node = for (childNodes <- mapOption(filterNodes(elem.childNodes()), createNode))
-          yield NodeElement(None, elem.tagName(), childNodes, getAttributes(element.attributes()))
+        val node = mapOption(filterNodes(elem.childNodes()), createNode)
+            .map(NodeElement(None, elem.tagName(), _, getAttributes(element.attributes())))
 
         // If it's repeated, create the repeated node and return it
         if (elem.attributes().hasKey(FOREACH_NODE_ATTRIBUTE))
